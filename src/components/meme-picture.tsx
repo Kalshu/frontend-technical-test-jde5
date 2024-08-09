@@ -1,13 +1,10 @@
 import { Box, Text, useDimensions } from "@chakra-ui/react";
 import { useMemo, useRef } from "react";
+import { MemeText } from "../client";
 
 export type MemePictureProps = {
-  pictureUrl: string;
-  texts: {
-    content: string;
-    x: number;
-    y: number;
-  }[];
+  pictureUrl?: string | null;
+  texts: MemeText[];
   dataTestId?: string;
 };
 
@@ -18,7 +15,7 @@ const REF_FONT_SIZE = 36;
 export const MemePicture: React.FC<MemePictureProps> = ({
   pictureUrl,
   texts: rawTexts,
-  dataTestId = '',
+  dataTestId = "",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dimensions = useDimensions(containerRef, true);
@@ -45,7 +42,7 @@ export const MemePicture: React.FC<MemePictureProps> = ({
       width="full"
       height={height}
       ref={containerRef}
-      backgroundImage={pictureUrl}
+      backgroundImage={pictureUrl ?? ""}
       backgroundColor="gray.100"
       backgroundPosition="center"
       backgroundRepeat="no-repeat"

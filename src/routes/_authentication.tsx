@@ -6,15 +6,17 @@ import {
 } from "@tanstack/react-router";
 import { useAuthentication } from "../contexts/authentication";
 
+const AuthenticationRoute = () => {
+  const { state: { isAuthenticated } = {} } = useAuthentication();
+  const { pathname } = useLocation();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" search={{ redirect: pathname }} replace />;
+  }
+
+  return <Outlet />;
+};
+
 export const Route = createFileRoute("/_authentication")({
-  component: () => {
-    const { state } = useAuthentication();
-    const { pathname } = useLocation();
-
-    if (!state.isAuthenticated) {
-      return <Navigate to="/login" search={{ redirect: pathname }} replace />;
-    }
-
-    return <Outlet />;
-  },
+  component: AuthenticationRoute,
 });
